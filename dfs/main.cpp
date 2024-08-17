@@ -1,6 +1,30 @@
 #include<iostream>
 using namespace std;
 
+
+/*
+0 0 0 1 1
+0 0 1 1 0
+0 1 0 1 1
+1 1 1 0 0
+1 0 1 0 0
+
+
+
+0 0 0 1 0 0 0 0 0
+0 0 0 1 0 0 0 0 0
+0 0 0 0 1 1 0 0 0
+1 1 0 0 1 0 0 0 1
+0 0 1 1 0 1 1 1 1
+0 0 1 0 1 0 1 0 0
+0 0 0 0 1 1 0 0 0
+0 0 0 0 1 0 0 0 0
+0 0 0 1 1 0 0 0 0
+
+DFS:2 5 6 4 8 7 3 1 0
+
+*/
+
 struct Node{
     int val;
     Node* next;
@@ -18,17 +42,17 @@ int pop(Node **top){
         Node *temp=*top;
         int rezultat=(*top)->val;
         *top=(*top)->next;
-        delete[] top;
+        delete[] temp;
         return rezultat;
     }
     return -1;
 }
 
-int peek(Node **top){
-    if(top != nullptr){
-        return (*top)->val;
-    }
-}
+// int peek(Node **top){
+//     if(top != nullptr){
+//         return (*top)->val;
+//     }
+// }
 
 int isEmpty(Node *top){
     return top==nullptr;
@@ -49,12 +73,13 @@ void DFS(int **graph, int n,int start){
         int currentNode = pop(&stack);
         cout<<currentNode<<" ";
         for(int i=0;i<n;i++){
-            if(graph[currentNode][i]==1 && !visited[i]){
+            if(graph[currentNode][i] == 1 && !visited[i]){
                 push(&stack, i);
                 visited[i]=true;
             }
         }
     }
+    delete[] visited;
 }
 
 int main(){
@@ -73,11 +98,13 @@ int main(){
         }
     }
 
+     cin>>nodStart;
+
     DFS(graph,n,nodStart);
 
     cout<<"Introduceti nodul de strat:"<<endl;
 
-    cin>>nodStart;
+   
 
     
 
@@ -85,6 +112,7 @@ int main(){
         delete[] graph[i];
     }
     delete[] graph;
+
 
     return 0;
 }
